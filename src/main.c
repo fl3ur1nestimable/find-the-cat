@@ -2,7 +2,18 @@
 #include <stdio.h>
 
 
-int main(int argc, char const *argv[])
+int estuneoption(char *chaine){
+    char** nomoption = {"-name", "-size", "-date", "-mime", "-ctc" ,"-dir"};
+    for (int i=0;i<6;i++){
+        if (strcmp(chaine,nomoption[i])==0){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+int main(int argc, char *argv[])
 {
     
    // int* paramoption = {1, 1, 1, 1, 1, 2};
@@ -11,9 +22,9 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
-    for (int i=1;i++; i<argc){
-        if (argv[i] == "-test" && argv[i+1]!=NULL){
-            if (argv[i+1]=="-dir"){
+    for (int i=1;i<argc;i++){
+        if (strcmp(argv[i],"-test")==0 && argv[i+1]!=NULL){
+            if (strcmp(argv[i+1],"-dir")==0){
                 if (argv[i+2]!=NULL){
                     if (estuneoption(argv[i+2])==1){
                         printf("La valeur du flag -dir est nulle\n");
@@ -38,13 +49,4 @@ int main(int argc, char const *argv[])
 }
     
 
-int estuneoption(char const *chaine){
-    char** nomoption = {"-name", "-size", "-date", "-mime", "-ctc" ,"-dir"};
-    for (int i=0;i++;i<6){
-        if (chaine==nomoption[i]){
-            return 1;
-        }
-    }
-    return 0;
-}
 

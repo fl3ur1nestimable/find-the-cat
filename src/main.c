@@ -17,13 +17,16 @@ int estuneoption(char *chaine){
 
 int main(int argc, char *argv[])
 {
-   // int* paramoption = {1, 1, 1, 1, 1, 2};
+    
+    // int* paramoption = {1, 1, 1, 1, 1, 2};
     if (argc < 2){
         printf("Pas assez d'argument\n");
         return 0;
     }
 
-    for (int i=1;i<argc;i++){
+    parcours(argv[1]);
+
+    for (int i=2;i<argc;i++){
         if (strcmp(argv[i],"-test")==0 && argv[i+1]!=NULL){
             if (strcmp(argv[i+1],"-dir")==0){
                 if (argv[i+2]!=NULL){

@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 int estuneoption(char *chaine){
-    char** nomoption = {"-name", "-size", "-date", "-mime", "-ctc" ,"-dir"};
+    char* nomoption[] = {"-name", "-size", "-date", "-mime", "-ctc" ,"-dir"};
     for (int i=0;i<6;i++){
         if (strcmp(chaine,nomoption[i])==0){
             return 1;

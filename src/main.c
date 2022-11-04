@@ -15,10 +15,8 @@ int estuneoption(char *chaine){
 }
 
 
-int main(int argc, char *argv[])
-{
-    
-    // int* paramoption = {1, 1, 1, 1, 1, 2};
+int main(int argc, char *argv[]){
+
     if (argc < 2){
         printf("Pas assez d'argument\n");
         return 0;
@@ -65,3 +63,4 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
+

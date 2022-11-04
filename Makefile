@@ -9,7 +9,7 @@ CFLAGS+=$(CPPFLAGS) -O0 -g3 -fsanitize=address -fno-omit-frame-pointer -fno-opti
 LDFLAGS+=-fsanitize=address
 
 # Makefile settings - Can be customized.
-APPNAME = myapp
+APPNAME = ftc
 EXT = .c
 SRCDIR = src
 OBJDIR = obj

@@ -6,7 +6,6 @@
 CC = gcc 
 CXXFLAGS = -std=c11 -Wall -Wextra -pedantic -fdiagnostics-color=always
 CFLAGS+=$(CPPFLAGS) -O0 -g3 -fno-omit-frame-pointer -fno-optimize-sibling-calls
-LDFLAGS+=-fsanitize=address
 
 # Makefile settings - Can be customized.
 APPNAME = ftc

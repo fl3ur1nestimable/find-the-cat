@@ -3,5 +3,6 @@
 
 
 void parcours(char* directory);
+void parcours_name(char* directory, char* name);
 
 #endif

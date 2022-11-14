@@ -19,12 +19,12 @@ int main(int argc, char *argv[]){
 
     if (argc < 2){
         printf("Pas assez d'argument\n");
-        return 0;
+        exit(EXIT_FAILURE);
     }
 
-    parcours(argv[1]);
+    //parcours_name(argv[1],argv[2]);
 
-    for (int i=2;i<argc;i++){
+    for (int i=1;i<argc;i++){
         if (strcmp(argv[i],"-test")==0 && argv[i+1]!=NULL){
             if (strcmp(argv[i+1],"-dir")==0){
                 if (argv[i+2]!=NULL){
@@ -47,19 +47,32 @@ int main(int argc, char *argv[]){
                 printf("La valeur du flag %s est nulle\n", argv[i+1]);
                 i=i+1;
             }
-
-
             
+            else if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
+            {
+                printf("-test : argument inconnu : %s\n",argv[i+1]);
+                exit(EXIT_FAILURE);
+            }
+
             else if (argv[i+2]!=NULL){
                 printf("La valeur du flag %s est %s\n", argv[i+1],argv[i+2]);
                 i=i+2;
             }
-            
+                        
             else {
                 printf("Pas assez d'arguments\n");
+                exit(EXIT_FAILURE);
             }
         }
-
+        /*autre cas que -test*/
+        else if (estuneoption(argv[i])==1)
+        {
+            printf("oui\n");
+        }
+        else{
+            printf("option inconnue : %s\n",argv[i]);
+        }
+        
     }
     return 0;
 }

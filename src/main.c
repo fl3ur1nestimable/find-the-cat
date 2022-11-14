@@ -65,13 +65,13 @@ int main(int argc, char *argv[]){
             }
         }
         /*autre cas que -test*/
-        else if (estuneoption(argv[i])==1)
+        /*else if (estuneoption(argv[i])==1)
         {
             printf("oui\n");
         }
         else{
             printf("option inconnue : %s\n",argv[i]);
-        }
+        }*/
         
     }
     return 0;

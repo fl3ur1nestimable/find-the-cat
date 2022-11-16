@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
 #include "util.h"
+#include "struct_command.h"
 
 int estuneoption(char *chaine){
     char* nomoption[] = {"-name", "-size", "-date", "-mime", "-ctc" ,"-dir", "-color", "-perm", "-link", "-threads", "-ou"};
@@ -17,12 +17,16 @@ int estuneoption(char *chaine){
 
 int main(int argc, char *argv[]){
 
+    struct_command *c = create_command();
+
     if (argc < 2){
         printf("Pas assez d'argument\n");
         exit(EXIT_FAILURE);
     }
 
-    //parcours_name(argv[1],argv[2]);
+    if (argc < 3){
+        parcours(argv[1]);
+    }
 
     for (int i=2;i<argc;i++){
         if (strcmp(argv[i],"-test")==0 && argv[i+1]!=NULL){
@@ -64,7 +68,13 @@ int main(int argc, char *argv[]){
                 exit(EXIT_FAILURE);
             }
         }
-        
+
+        else if (strcmp(argv[i],"-name")==0 && argv[i+1]!=NULL)
+        {
+            setName(c,argv[i+1]);
+            printf("%s\n",c->name);
+        }
+        //free(c);
     }
     return 0;
 }

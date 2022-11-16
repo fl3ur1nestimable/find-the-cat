@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
 
     //parcours_name(argv[1],argv[2]);
 
-    for (int i=1;i<argc;i++){
+    for (int i=2;i<argc;i++){
         if (strcmp(argv[i],"-test")==0 && argv[i+1]!=NULL){
             if (strcmp(argv[i+1],"-dir")==0){
                 if (argv[i+2]!=NULL){
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
             
             else if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
-                printf("-test : argument inconnu : %s\n",argv[i+1]);
+                printf("Le flag %s n'est pas correct\n",argv[i+1]);
                 exit(EXIT_FAILURE);
             }
 
@@ -64,14 +64,6 @@ int main(int argc, char *argv[]){
                 exit(EXIT_FAILURE);
             }
         }
-        /*autre cas que -test*/
-        /*else if (estuneoption(argv[i])==1)
-        {
-            printf("oui\n");
-        }
-        else{
-            printf("option inconnue : %s\n",argv[i]);
-        }*/
         
     }
     return 0;

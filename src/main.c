@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
     }
 
     if (argc < 3){
-        parcours(argv[1]);
+        parcours(argv[1],c);
     }
 
     for (int i=2;i<argc;i++){
@@ -72,10 +72,9 @@ int main(int argc, char *argv[]){
         else if (strcmp(argv[i],"-name")==0 && argv[i+1]!=NULL)
         {
             setName(c,argv[i+1]);
-            printf("%s\n",c->name);
         }
-        //free(c);
     }
+    parcours(argv[1],c);
     return 0;
 }
 

@@ -17,7 +17,7 @@ typedef struct struct_command
 } struct_command;
 
 struct_command* create_command();
-void destroy_command(struct_command *c);
+//void destroy_command(struct_command *c);
 void setName();
 
 

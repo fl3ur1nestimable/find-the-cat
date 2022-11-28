@@ -12,26 +12,13 @@ void parcours(char* directory,struct_command* c){
     if (d!=NULL){
         while ((dir = readdir(d))!=NULL){   
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
-                
-                if (c->name!=NULL && compareName(dir,c->name))
+                char retour[10000] = "";
+                strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
+                if (compare(dir,c))
                 {
-                    char retour[10000] = "";
-                    strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                    printf("%s\n",retour);          
-                    parcours(retour,c);
-                }
-                else if (c->name==NULL)
-                {
-                    char retour[10000] = "";
-                    strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                    printf("%s\n",retour);          
-                    parcours(retour,c);
-                }
-                
-                else
-                {
-                    continue;
-                }
+                    printf("%s\n",retour);
+                }  
+                parcours(retour,c);
                 
             }
         }
@@ -40,10 +27,12 @@ void parcours(char* directory,struct_command* c){
 }
 
 
-int compareName(struct dirent *dir, char* name){
-    if (strcmp(dir->d_name,name)==0)
+int compare(struct dirent *dir, struct_command* c){
+    if (c->name!=NULL && strcmp(dir->d_name,c->name)==0)
     {
         return 1;
+        
     }
     return 0;
 }
+

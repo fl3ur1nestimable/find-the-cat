@@ -5,7 +5,7 @@
 
 
 void parcours(char* directory,struct_command *c);
-int compareName(struct dirent *dir, char* name);
+int compare(struct dirent *dir, struct_command* c);
 
 
 #endif

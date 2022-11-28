@@ -69,10 +69,18 @@ int main(int argc, char *argv[]){
             }
         }
 
-        else if (strcmp(argv[i],"-name")==0 && argv[i+1]!=NULL)
+        else if (strcmp(argv[i],"-name")==0)
         {
-            setName(c,argv[i+1]);
+            if (argv[i+1]!=NULL)
+            {
+                setName(c,argv[i+1]);
+            }else
+            {
+                printf("-name : no value\n");
+                exit(EXIT_FAILURE);
+            }
         }
+        
     }
     parcours(argv[1],c);
     return 0;

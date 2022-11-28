@@ -26,6 +26,24 @@ void parcours(char* directory,struct_command* c){
     closedir(d);
 }
 
+void parcoursSimple(char* directory){
+    struct dirent *dir;
+    DIR *d;
+    d = opendir(directory);
+    if (d!=NULL){
+        while ((dir = readdir(d))!=NULL){   
+            if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
+                char retour[10000] = "";
+                strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
+                printf("%s\n",retour);
+                parcoursSimple(retour);
+                
+            }
+        }
+    }
+    closedir(d);
+}
+
 
 int compare(struct dirent *dir, struct_command* c){
     if (c->name!=NULL && strcmp(dir->d_name,c->name)==0)

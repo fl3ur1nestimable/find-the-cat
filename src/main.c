@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
     }
 
     if (argc < 3){
-        parcoursSimple(argv[1]);
+        parcoursSimple(argv[1],0);
     }
 
     for (int i=2;i<argc;i++){

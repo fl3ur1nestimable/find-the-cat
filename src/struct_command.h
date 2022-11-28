@@ -14,6 +14,7 @@ typedef struct struct_command
     char *link;
     char *threads;
     char *ou;
+    int nb_of_flags;
 } struct_command;
 
 struct_command* create_command();

@@ -14,5 +14,6 @@ struct_command* create_command(){
 
 void setName(struct_command* c, char* name){
     c->name=name;
+    c->nb_of_flags++;
 }
 

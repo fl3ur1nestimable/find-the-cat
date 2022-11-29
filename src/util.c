@@ -21,7 +21,6 @@ void parcours(char* directory,struct_command* c){
                     printf("%s\n",retour);
                 }  
                 parcours(retour,c);
-                
             }
         }
     }
@@ -66,16 +65,17 @@ int compare_size(char* chemin_fichier, struct_command* c){
     struct stat fichier;
     int plusmoins=0;
     int unite=0;
-    int taillechaine=strlen(c->size);
-    int taillefichier;
-    char* newchaine=malloc(strlen(c->size)*sizeof(char));
-    strcpy(newchaine,c->size);  
-    
+
     if (c->size ==NULL){
         return 1;
     }
 
+    
     else {
+        int taillechaine=strlen(c->size);
+        int taillefichier;
+        char* newchaine=malloc(strlen(c->size)*sizeof(char));
+        strcpy(newchaine,c->size);  
         if (c->size[taillechaine-1]=='c' || c->size[taillechaine-1]=='k' || c->size[taillechaine-1]=='G' || c->size[taillechaine-1]=='M'){
             unite++;
         }
@@ -116,7 +116,6 @@ int compare_size(char* chemin_fichier, struct_command* c){
                 taillefichier=taillefichier*1024*1024*1024;
             }
         }
-
         if (plusmoins>0 && c->size[0]=='+'){
             if (fichier.st_size>taillefichier){
                 return 1;
@@ -132,7 +131,7 @@ int compare_size(char* chemin_fichier, struct_command* c){
                 return 1;
             }
         }
+        else {return 0;}
     }
-    return 0;
 }
 

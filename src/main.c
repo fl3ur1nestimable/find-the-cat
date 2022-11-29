@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
             if (argv[i+1]!=NULL)
             {
                 setName(c,argv[i+1]);
-                i++;
+                //i++;
             }else
             {
                 printf("-name : no value\n");
@@ -86,13 +86,13 @@ int main(int argc, char *argv[]){
         else if (strcmp(argv[i],"-size")==0){
             if (argv[i+1]!=NULL){
                 setSize(c,argv[i+1]);
-                i++;
+                //i++;
             }
             else{
                 printf("-size : no value\n");
                 exit(EXIT_FAILURE);
             }
-        }        
+        }       
     }
     parcours(argv[1],c);
     return 0;

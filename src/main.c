@@ -26,6 +26,7 @@ int main(int argc, char *argv[]){
 
     if (argc < 3){
         parcoursSimple(argv[1],0);
+        return 0;
     }
 
     for (int i=2;i<argc;i++){
@@ -74,13 +75,24 @@ int main(int argc, char *argv[]){
             if (argv[i+1]!=NULL)
             {
                 setName(c,argv[i+1]);
+                i++;
             }else
             {
                 printf("-name : no value\n");
                 exit(EXIT_FAILURE);
             }
         }
-        
+
+        else if (strcmp(argv[i],"-size")==0){
+            if (argv[i+1]!=NULL){
+                setSize(c,argv[i+1]);
+                i++;
+            }
+            else{
+                printf("-size : no value\n");
+                exit(EXIT_FAILURE);
+            }
+        }        
     }
     parcours(argv[1],c);
     return 0;

@@ -17,3 +17,7 @@ void setName(struct_command* c, char* name){
     c->nb_of_flags++;
 }
 
+void setSize(struct struct_command* c, char* size){
+    c->size=size;
+    c->nb_of_flags++;
+}

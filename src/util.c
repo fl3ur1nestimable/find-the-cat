@@ -78,6 +78,7 @@ int compare_size(char* chemin_fichier, struct_command* c){
         if (c->size[taillechaine-1]=='c' || c->size[taillechaine-1]=='k' || c->size[taillechaine-1]=='G' || c->size[taillechaine-1]=='M'){
             unite++;
         }
+
         if (c->size[0]=='+' || c->size[0]=='-'){
             plusmoins++;
         }
@@ -99,34 +100,31 @@ int compare_size(char* chemin_fichier, struct_command* c){
         }
         
         stat(chemin_fichier, &fichier);
-
+        unsigned long vraitaille = (unsigned long) taillefichier;
         if (unite>0){
             if (c->size[taillechaine-1]=='k'){
-                taillefichier=taillefichier*1024;
+                vraitaille=vraitaille*1024;
             }
-        }
-        else if (unite>0){
+        
             if (c->size[taillechaine-1]=='M'){
-                taillefichier=taillefichier*1024*1024;
+                vraitaille=vraitaille*1024*1024;
             }
-        }
-        else if (unite>0){
             if (c->size[taillechaine-1]=='G'){
-                taillefichier=taillefichier*1024*1024*1024;
+                vraitaille=vraitaille*1024*1024*1024;
             }
         }
         if (plusmoins>0 && c->size[0]=='+'){
-            if (fichier.st_size>taillefichier){
+            if (fichier.st_size>vraitaille){
                 return 1;
             }
         }
         else if (plusmoins>0 && c->size[0]=='-'){
-            if (fichier.st_size<taillefichier){
+            if (fichier.st_size<vraitaille){
                 return 1;
             }
         }
         else if (plusmoins==0){
-            if (fichier.st_size==taillefichier){
+            if (fichier.st_size==vraitaille){
                 return 1;
             }
         }

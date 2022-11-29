@@ -11,7 +11,7 @@ void parcours(char* directory,struct_command* c){
     DIR *d;
     d = opendir(directory);
     if (d!=NULL){
-        while ((dir = readdir(d))!=NULL){   
+        while ((dir = readdir(d))!=NULL){ 
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
@@ -65,7 +65,6 @@ int compare_size(char* chemin_fichier, struct_command* c){
     struct stat fichier;
     int plusmoins=0;
     int unite=0;
-
     if (c->size ==NULL){
         return 1;
     }
@@ -132,6 +131,7 @@ int compare_size(char* chemin_fichier, struct_command* c){
             }
         }
         else {return 0;}
+    return 0;
     }
 }
 

@@ -69,8 +69,6 @@ int main(int argc, char *argv[]){
                 printf("Pas assez d'arguments\n");
                 exit(EXIT_FAILURE);
             }
-            printf("i=%d\n",i);
-            printf("argc=%d\n",argc);
 
             if (i+2>=argc){return 1;}
 

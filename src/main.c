@@ -36,6 +36,7 @@ int main(int argc, char *argv[]){
                     if (estuneoption(argv[i+2])==1){
                         printf("La valeur du flag -dir est nulle\n");
                         i=i+1;
+                        
                     }
                     else {
                         printf("La valeur du flag -dir est %s\n", argv[i+2]);
@@ -68,6 +69,11 @@ int main(int argc, char *argv[]){
                 printf("Pas assez d'arguments\n");
                 exit(EXIT_FAILURE);
             }
+            printf("i=%d\n",i);
+            printf("argc=%d\n",argc);
+
+            if (i+2>=argc){return 1;}
+
         }
 
         else if (strcmp(argv[i],"-name")==0)

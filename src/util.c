@@ -1,10 +1,11 @@
 #include <dirent.h>
 #include "util.h"
-#include <stdio.h>
+#include <stdio.h>                                                    
 #include <string.h>
 #include <stdlib.h>
 #include "struct_command.h"
 #include <sys/stat.h>
+#include <ctype.h>
 
 void parcours(char* directory,struct_command* c){
     struct dirent *dir;
@@ -15,7 +16,7 @@ void parcours(char* directory,struct_command* c){
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                //printf("%s\n",c->size);
+                //printf("%s\n",c->                          size);
                 if (compare_name(dir,c) && compare_size(retour,c))
                 {
                     printf("%s\n",retour);
@@ -84,21 +85,23 @@ int compare_size(char* chemin_fichier, struct_command* c){
         }
         if (unite>0 && plusmoins>0){
             newchaine++;
-            newchaine[strlen(newchaine)-1]='\0';
-            taillefichier=atoi(newchaine);          
+            newchaine[strlen(newchaine)-1]='\0';         
         }
         else if (unite>0 && plusmoins==0){
             newchaine[strlen(newchaine)-1]='\0';
-            taillefichier=atoi(newchaine);
         }
         else if(unite==0 && plusmoins==0){
-            taillefichier=atoi(newchaine);
         }
         else if(unite==0 && plusmoins>0){
             newchaine++;
-            taillefichier=atoi(newchaine); 
         }
-        
+        for (int i=0;i<strlen(newchaine);i++){
+            if (!isdigit(newchaine[i])){
+                printf("Format : (+/-)taille(c/k/M/G)\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+        taillefichier=atoi(newchaine);
         stat(chemin_fichier, &fichier);
         unsigned long vraitaille = (unsigned long) taillefichier;
         if (unite>0){

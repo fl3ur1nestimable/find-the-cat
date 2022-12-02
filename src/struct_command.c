@@ -21,3 +21,8 @@ void setSize(struct struct_command* c, char* size){
     c->size=size;
     c->nb_of_flags++;
 }
+
+void setDate(struct struct_command* c, char* date){
+    c->date=date;
+    c->nb_of_flags++;
+}

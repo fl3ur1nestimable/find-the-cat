@@ -6,6 +6,7 @@
 #include "struct_command.h"
 #include <sys/stat.h>
 #include <ctype.h>
+#include <time.h>
 
 void parcours(char* directory,struct_command* c){
     struct dirent *dir;
@@ -17,7 +18,7 @@ void parcours(char* directory,struct_command* c){
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
                 //printf("%s\n",c->                          size);
-                if (compare_name(dir,c) && compare_size(retour,c))
+                if (compare_name(dir,c) && compare_size(retour,c) && compare_date(retour,c))
                 {
                     printf("%s\n",retour);
                 }  
@@ -80,7 +81,7 @@ int compare_size(char* chemin_fichier, struct_command* c){
             unite++;
         }
 
-        if (c->size[0]=='+' || c->size[0]=='-'){
+        if (c->size[0]=='+'){
             plusmoins++;
         }
         if (unite>0 && plusmoins>0){
@@ -136,3 +137,68 @@ int compare_size(char* chemin_fichier, struct_command* c){
     }
 }
 
+
+int compare_date(char* chemin_fichier, struct_command* c){
+    struct stat fichier;
+    int plusmoins=0;
+    if (c->date ==NULL){
+        return 1;
+    }
+    else {
+        int taillechaine=strlen(c->date);
+        char* newchaine1=malloc(strlen(c->date)*sizeof(char));
+        strcpy(newchaine1,c->date);  
+        if (!(c->date[taillechaine-1]=='m' || c->date[taillechaine-1]=='h' || c->date[taillechaine-1]=='j')){
+            printf("il faut une unité : m(minutes) h(heures) j(jours)\n");
+            exit(EXIT_FAILURE);
+        }
+        if (c->date[0]=='+'){
+            plusmoins++;
+        }
+        if (plusmoins>0){
+            newchaine1++;
+            newchaine1[strlen(newchaine1)-1]='\0';         
+        }
+        else if (plusmoins==0){
+            newchaine1[strlen(newchaine1)-1]='\0';
+        }
+
+        for (int i=0;i<strlen(newchaine1);i++){
+            if (!isdigit(newchaine1[i])){
+                printf("Format : (+)durée(m/h/j)\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+        int timeasked=atoi(newchaine1);
+        double truetime= (double) timeasked;
+        
+        time_t ajd = time(NULL);
+        stat(chemin_fichier, &fichier);
+        time_t dateacces = fichier.st_atime;
+        double diff = difftime(ajd,dateacces);
+        
+        if (c->date[taillechaine-1]=='m'){
+            diff=diff/60;
+        }
+        else if (c->date[taillechaine-1]=='h'){
+            diff=diff/60/60;
+        }
+        else if (c->date[taillechaine-1]=='j'){
+            diff=diff/60/60/24;
+        }
+
+        if (plusmoins==0){
+            if (diff<=truetime){
+                return 1;
+            }
+        }
+
+        else if (plusmoins>0){
+            if (diff>truetime){
+                return 1;
+            }
+        }
+
+        return 0;         
+    }
+}

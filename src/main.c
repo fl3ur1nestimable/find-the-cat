@@ -96,6 +96,17 @@ int main(int argc, char *argv[]){
                 printf("-size : no value\n");
                 exit(EXIT_FAILURE);
             }
+        }
+
+        else if (strcmp(argv[i],"-date")==0){
+            if (argv[i+1]!=NULL){
+                setDate(c,argv[i+1]);
+                i++;
+            }
+            else{
+                printf("-date : no value\n");
+                exit(EXIT_FAILURE);
+            }   
         }       
     }
     parcours(argv[1],c);

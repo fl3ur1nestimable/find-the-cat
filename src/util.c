@@ -12,7 +12,8 @@
 void parcours(char* directorypath,struct_command* c){
     struct dirent *dir;
     DIR *d;
-    char* directory=malloc(strlen(directorypath)*sizeof(char));
+    //char* directory=malloc(strlen(directorypath)*sizeof(char));
+    char directory[strlen(directorypath)];
     strcpy(directory,directorypath);
     if (directory[strlen(directorypath)-1]=='/')
     {
@@ -39,7 +40,8 @@ void parcoursSimple(char* directorypath, int count){
     struct dirent *dir;
     DIR *d;
 
-    char* directory=malloc(strlen(directorypath)*sizeof(char));
+    //char* directory=malloc(strlen(directorypath)*sizeof(char));
+    char directory[strlen(directorypath)];
     strcpy(directory,directorypath);
     if (directory[strlen(directorypath)-1]=='/')
     {
@@ -126,7 +128,7 @@ int compare_size(char* chemin_fichier, struct_command* c){
             newchaine++;
         }
         for (int i=0;i<(int)strlen(newchaine);i++){
-            if (!isdigit(newchaine[i])){
+            if (!isdigit(newchaine[i])){ 
                 printf("Format : (+/-)taille(c/k/M/G)\n");
                 exit(EXIT_FAILURE);
             }

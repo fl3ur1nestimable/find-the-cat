@@ -8,9 +8,9 @@ struct_command* create_command(){
     return c;
 }
 
-/*void destroy_command(struct_command *c){
+void destroy_command(struct_command *c){
     free(c);
-}*/
+}
 
 void setName(struct_command* c, char* name){
     c->name=name;

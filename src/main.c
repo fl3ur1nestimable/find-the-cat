@@ -110,6 +110,7 @@ int main(int argc, char *argv[]){
         }       
     }
     parcours(argv[1],c);
+    free(c);
     return 0;
 }
 

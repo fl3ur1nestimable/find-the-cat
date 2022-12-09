@@ -8,16 +8,21 @@
 #include <ctype.h>
 #include <time.h>
 
-void parcours(char* directory,struct_command* c){
+void parcours(char* directorypath,struct_command* c){
     struct dirent *dir;
     DIR *d;
+    char* directory=malloc(strlen(directorypath)*sizeof(char));
+    strcpy(directory,directorypath);
+    if (directory[strlen(directorypath)-1]=='/')
+    {
+        directory[strlen(directory)-1]='\0';
+    }
     d = opendir(directory);
     if (d!=NULL){
         while ((dir = readdir(d))!=NULL){ 
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                //printf("%s\n",c->                          size);
                 if (compare_name(dir,c) && compare_size(retour,c) && compare_date(retour,c))
                 {
                     printf("%s\n",retour);
@@ -29,9 +34,16 @@ void parcours(char* directory,struct_command* c){
     closedir(d);
 }
 
-void parcoursSimple(char* directory, int count){
+void parcoursSimple(char* directorypath, int count){
     struct dirent *dir;
     DIR *d;
+
+    char* directory=malloc(strlen(directorypath)*sizeof(char));
+    strcpy(directory,directorypath);
+    if (directory[strlen(directorypath)-1]=='/')
+    {
+        directory[strlen(directory)-1]='\0';
+    }
     d = opendir(directory);
     if (d!=NULL){
         while ((dir = readdir(d))!=NULL){   

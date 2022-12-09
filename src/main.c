@@ -21,11 +21,13 @@ int main(int argc, char *argv[]){
 
     if (argc < 2){
         printf("Pas assez d'argument\n");
+        free(c);
         exit(EXIT_FAILURE);
     }
 
     if (argc < 3){
         parcoursSimple(argv[1],0);
+        free(c);
         return 0;
     }
 

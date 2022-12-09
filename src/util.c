@@ -106,7 +106,8 @@ int compare_size(char* chemin_fichier, struct_command* c){
     else {
         int taillechaine=strlen(c->size);
         int taillefichier;
-        char* newchaine=malloc(strlen(c->size)*sizeof(char));
+        char newchaine[strlen(c->size)];
+        //char* newchaine=malloc(strlen(c->size)*sizeof(char));
         strcpy(newchaine,c->size);  
         if (c->size[taillechaine-1]=='c' || c->size[taillechaine-1]=='k' || c->size[taillechaine-1]=='G' || c->size[taillechaine-1]=='M'){
             unite++;
@@ -177,7 +178,8 @@ int compare_date(char* chemin_fichier, struct_command* c){
     }
     else {
         int taillechaine=strlen(c->date);
-        char* newchaine1=malloc(strlen(c->date)*sizeof(char));
+        char newchaine1[strlen(c->size)];
+        //char* newchaine1=malloc(strlen(c->date)*sizeof(char));
         strcpy(newchaine1,c->date);  
         if (!(c->date[taillechaine-1]=='m' || c->date[taillechaine-1]=='h' || c->date[taillechaine-1]=='j')){
             printf("il faut une unité : m(minutes) h(heures) j(jours)\n");
@@ -229,7 +231,6 @@ int compare_date(char* chemin_fichier, struct_command* c){
                 return 1;
             }
         }
-
         return 0;         
     }
 }

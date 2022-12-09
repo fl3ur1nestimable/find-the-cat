@@ -113,11 +113,13 @@ int compare_size(char* chemin_fichier, struct_command* c){
             unite++;
         }
 
-        if (c->size[0]=='+'){
+        if (c->size[0]=='+'||c->size[0]=='-'){
             plusmoins++;
         }
         if (unite>0 && plusmoins>0){
-            newchaine++;
+            for (int i=0;i<(int)strlen(newchaine);i++){
+                newchaine[i]=newchaine[i+1];
+            }
             newchaine[strlen(newchaine)-1]='\0';         
         }
         else if (unite>0 && plusmoins==0){
@@ -126,7 +128,9 @@ int compare_size(char* chemin_fichier, struct_command* c){
         else if(unite==0 && plusmoins==0){
         }
         else if(unite==0 && plusmoins>0){
-            newchaine++;
+            for (int i=0;i<(int)strlen(newchaine);i++){
+                newchaine[i]=newchaine[i+1];
+            }
         }
         for (int i=0;i<(int)strlen(newchaine);i++){
             if (!isdigit(newchaine[i])){ 
@@ -189,7 +193,9 @@ int compare_date(char* chemin_fichier, struct_command* c){
             plusmoins++;
         }
         if (plusmoins>0){
-            newchaine1++;
+            for (int i=0;i<(int)strlen(newchaine1);i++){
+                newchaine1[i]=newchaine1[i+1];
+            }
             newchaine1[strlen(newchaine1)-1]='\0';         
         }
         else if (plusmoins==0){

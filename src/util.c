@@ -25,7 +25,7 @@ void parcours(char* directorypath,struct_command* c){
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                if (compare_name(dir,c) && compare_size(retour,c) && compare_date(retour,c))
+                if ((compare_name(dir,c)||compare_regex(dir,c)) && compare_size(retour,c) && compare_date(retour,c))
                 {
                     printf("%s\n",retour);
                 }  
@@ -67,23 +67,37 @@ void parcoursSimple(char* directorypath, int count){
     closedir(d);
 }
 
-
 int compare_name(struct dirent *dir, struct_command* c){
+    if (c->name==NULL){
+        return 1;
+    }
+    else{
+        if (strcmp(dir->d_name,c->name)==0){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int compare_regex(struct dirent *dir, struct_command* c){
     if(c->name==NULL){
         return 1;
     }
+
     else{
         int err;
         regex_t preg;
         const char *str_request = dir->d_name;
         const char *str_regex = c->name;    
-        err = regcomp(&preg,str_regex,REG_NOSUB|REG_EXTENDED);
+        err = regcomp(&preg,str_regex,0);
         if (err == 0){
             int match;
             match = regexec(&preg, str_request,0,NULL,0);
             regfree(&preg);
             if (match==0)
             {
+                printf("%s\n",str_request);
+                printf("%s\n", str_regex);
                 return 1;
                 
             }
@@ -107,7 +121,6 @@ int compare_size(char* chemin_fichier, struct_command* c){
         int taillechaine=strlen(c->size);
         int taillefichier;
         char newchaine[strlen(c->size)];
-        //char* newchaine=malloc(strlen(c->size)*sizeof(char));
         strcpy(newchaine,c->size);  
         if (c->size[taillechaine-1]=='c' || c->size[taillechaine-1]=='k' || c->size[taillechaine-1]=='G' || c->size[taillechaine-1]=='M'){
             unite++;
@@ -182,7 +195,7 @@ int compare_date(char* chemin_fichier, struct_command* c){
     }
     else {
         int taillechaine=strlen(c->date);
-        char newchaine1[strlen(c->date)];
+        char newchaine1[strlen(c->size)];
         //char* newchaine1=malloc(strlen(c->date)*sizeof(char));
         strcpy(newchaine1,c->date);  
         if (!(c->date[taillechaine-1]=='m' || c->date[taillechaine-1]=='h' || c->date[taillechaine-1]=='j')){

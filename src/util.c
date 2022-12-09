@@ -182,7 +182,7 @@ int compare_date(char* chemin_fichier, struct_command* c){
     }
     else {
         int taillechaine=strlen(c->date);
-        char newchaine1[strlen(c->size)];
+        char newchaine1[strlen(c->date)];
         //char* newchaine1=malloc(strlen(c->date)*sizeof(char));
         strcpy(newchaine1,c->date);  
         if (!(c->date[taillechaine-1]=='m' || c->date[taillechaine-1]=='h' || c->date[taillechaine-1]=='j')){

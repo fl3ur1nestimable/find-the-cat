@@ -59,6 +59,7 @@ int main(int argc, char *argv[]){
             else if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
                 printf("Le flag %s n'est pas correct\n",argv[i+1]);
+                free(c);
                 exit(EXIT_FAILURE);
             }
 
@@ -69,10 +70,14 @@ int main(int argc, char *argv[]){
                         
             else {
                 printf("Pas assez d'arguments\n");
+                free(c);
                 exit(EXIT_FAILURE);
             }
 
-            if (i+2>=argc){return 1;}
+            if (i+2>=argc){
+                free(c);
+                return 1;
+            }
 
         }
 
@@ -85,6 +90,7 @@ int main(int argc, char *argv[]){
             }else
             {
                 printf("-name : no value\n");
+                free(c);
                 exit(EXIT_FAILURE);
             }
         }
@@ -96,6 +102,7 @@ int main(int argc, char *argv[]){
             }
             else{
                 printf("-size : no value\n");
+                free(c);
                 exit(EXIT_FAILURE);
             }
         }
@@ -107,6 +114,7 @@ int main(int argc, char *argv[]){
             }
             else{
                 printf("-date : no value\n");
+                free(c);
                 exit(EXIT_FAILURE);
             }   
         }  
@@ -133,6 +141,7 @@ int main(int argc, char *argv[]){
             }else
             {
                 printf("-mime : no value\n");
+                free(c);
                 exit(EXIT_FAILURE);
             }
         }

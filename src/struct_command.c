@@ -26,3 +26,17 @@ void setDate(struct struct_command* c, char* date){
     c->date=date;
     c->nb_of_flags++;
 }
+
+void setMime(struct struct_command* c, char* mime){
+    c->mime=mime;
+    c->nb_of_flags++;
+}
+
+void setDir(struct struct_command* c, char* dir){
+    c->dir=dir;
+    c->nb_of_flags++;
+}
+
+void setYesDir(struct struct_command* c){
+    c->yesdir=1;
+}

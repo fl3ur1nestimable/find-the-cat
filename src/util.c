@@ -8,6 +8,8 @@
 #include <ctype.h>
 #include <time.h>
 #include <regex.h>
+#include "MegaMimes.h"
+
 
 void parcours(char* directorypath,struct_command* c){
     struct dirent *dir;
@@ -25,7 +27,7 @@ void parcours(char* directorypath,struct_command* c){
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                if ((compare_name(dir,c)||compare_regex(dir,c)) && compare_size(retour,c) && compare_date(retour,c))
+                if ((compare_name(dir,retour, c)||compare_regex(dir,retour,c)) && compare_size(retour,c) && compare_date(retour,c) && compare_dir(dir, retour,c) && compare_mime(retour,c))
                 {
                     printf("%s\n",retour);
                 }  
@@ -67,24 +69,33 @@ void parcoursSimple(char* directorypath, int count){
     closedir(d);
 }
 
-int compare_name(struct dirent *dir, struct_command* c){
+int compare_name(struct dirent *dir,char* cheminfichier, struct_command* c){
     if (c->name==NULL){
         return 1;
     }
     else{
-        if (strcmp(dir->d_name,c->name)==0){
-            return 1;
+        if (isdir(cheminfichier)==1){
+            return 0;
+        }
+        else{
+            if (strcmp(dir->d_name,c->name)==0){
+                return 1;
+            }
         }
     }
     return 0;
 }
 
-int compare_regex(struct dirent *dir, struct_command* c){
+int compare_regex(struct dirent *dir, char* cheminfichier, struct_command* c){
     if(c->name==NULL){
         return 1;
     }
 
     else{
+        if (isdir(cheminfichier)==1){
+            return 0;
+        }
+        else{
         int err;
         regex_t preg;
         const char *str_request = dir->d_name;
@@ -96,14 +107,12 @@ int compare_regex(struct dirent *dir, struct_command* c){
             regfree(&preg);
             if (match==0)
             {
-                printf("%s\n",str_request);
-                printf("%s\n", str_regex);
-                return 1;
-                
+                return 1;   
             }
         }
         
     }
+    }   
     return 0;
 }
 
@@ -116,7 +125,9 @@ int compare_size(char* chemin_fichier, struct_command* c){
         return 1;
     }
 
-    
+    if (isdir(chemin_fichier)==1){
+            return 0;
+        }
     else {
         int taillechaine=strlen(c->size);
         int taillefichier;
@@ -193,9 +204,12 @@ int compare_date(char* chemin_fichier, struct_command* c){
     if (c->date ==NULL){
         return 1;
     }
+    if (isdir(chemin_fichier)==1){
+            return 0;
+        }
     else {
         int taillechaine=strlen(c->date);
-        char newchaine1[strlen(c->size)];
+        char newchaine1[strlen(c->date)];
         //char* newchaine1=malloc(strlen(c->date)*sizeof(char));
         strcpy(newchaine1,c->date);  
         if (!(c->date[taillechaine-1]=='m' || c->date[taillechaine-1]=='h' || c->date[taillechaine-1]=='j')){
@@ -251,5 +265,87 @@ int compare_date(char* chemin_fichier, struct_command* c){
             }
         }
         return 0;         
+    }
+}
+
+int compare_mime(char* chemin_fichier, struct_command* c){
+    //compare le mime type du fichier avec le mime type demandé
+
+    if (c->mime==NULL){
+        return 1;
+    }
+    else {    
+        char* mime = getMegaMimeType(chemin_fichier);
+        if (mime!=NULL){  
+            char mime2[strlen(mime)];
+            strcpy(mime2,mime);
+            for (int i=0;i<(int)strlen(mime2);i++){
+                if (mime2[i]=='/'){
+                    mime2[i]='\0';
+                    i=(int)strlen(mime2);
+                }
+            }      
+            if (strcmp(mime,c->mime)==0){
+                return 1;
+            }
+            else if (strcmp(mime2,c->mime)==0){
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+    return 0;
+    }
+}
+
+int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
+    if (c->yesdir==NULL){
+        return 1;
+    }
+    else if (c->yesdir==1 && c->dir!=NULL){
+        char directory[strlen(c->dir)];
+        strcpy(directory,c->dir);
+        if (directory[strlen(directory)-1]=='/')
+        {
+            directory[strlen(directory)-1]='\0';
+        }
+        DIR *d;
+        d = opendir(testfichier);
+        if(d!=NULL){   
+            closedir(d);
+            if (strcmp(dir->d_name,directory)==0){
+            return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+        else{
+            return 0;
+        }
+    }
+    else if (c->yesdir==1){
+        DIR *d;
+        d = opendir(testfichier);
+        if(d!=NULL){   
+            closedir(d) ;
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    return 0;
+}
+
+int isdir(char* chemin_fichier){
+    struct stat fichier;
+    stat(chemin_fichier, &fichier);
+    if (S_ISDIR(fichier.st_mode)){
+        return 1;
+    }
+    else {
+        return 0;
     }
 }

@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
 
         else if (strcmp(argv[i],"-name")==0)
         {
-            if (argv[i+1]!=NULL)
+            if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
                 setName(c,argv[i+1]);
                 i++;
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
         }
 
         else if (strcmp(argv[i],"-size")==0){
-            if (argv[i+1]!=NULL){
+            if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0){
                 setSize(c,argv[i+1]);
                 i++;
             }
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]){
         }
 
         else if (strcmp(argv[i],"-date")==0){
-            if (argv[i+1]!=NULL){
+            if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0){
                 setDate(c,argv[i+1]);
                 i++;
             }
@@ -109,8 +109,35 @@ int main(int argc, char *argv[]){
                 printf("-date : no value\n");
                 exit(EXIT_FAILURE);
             }   
-        }       
+        }  
+
+        else if (strcmp(argv[i],"-dir")==0){
+            if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0){
+                setDir(c,argv[i+1]);
+                setYesDir(c);
+                i++;
+            }
+            else if (argv[i+1]!=NULL && estuneoption(argv[i+1])==1){
+                setYesDir(c);
+            }
+            else if(argv[i+1]==NULL){
+                setYesDir(c);
+            }
+        }
+
+        else if (strcmp(argv[i],"-mime")==0){
+            if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
+            {
+                setMime(c,argv[i+1]);
+                i++;
+            }else
+            {
+                printf("-mime : no value\n");
+                exit(EXIT_FAILURE);
+            }
+        }
     }
+
     parcours(argv[1],c);
     free(c);
     return 0;

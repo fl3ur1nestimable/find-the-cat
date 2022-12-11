@@ -147,7 +147,7 @@ int main(int argc, char *argv[]){
         }
     }
 
-    parcours(argv[1],c);
+    parcours(argv[1],c,0);
     free(c);
     return 0;
 }

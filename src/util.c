@@ -11,7 +11,7 @@
 //#include "MegaMimes.h"
 
 
-void parcours(char* directorypath,struct_command* c){
+void parcours(char* directorypath,struct_command* c/*,int count*/){
     struct dirent *dir;
     DIR *d;
     //char* directory=malloc(strlen(directorypath)*sizeof(char));
@@ -25,13 +25,17 @@ void parcours(char* directorypath,struct_command* c){
     if (d!=NULL){
         while ((dir = readdir(d))!=NULL){ 
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
+                /*if (count==0){
+                    printf("%s\n",directory);
+                    count++;
+                }*/
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
                 if ((compare_name(dir,retour, c)||compare_regex(dir,retour,c)) && compare_size(retour,c) && compare_date(retour,c) && compare_dir(dir, retour,c) /*&& compare_mime(retour,c)*/)
                 {
                     printf("%s\n",retour);
                 }  
-                parcours(retour,c);
+                parcours(retour,c/*,count*/);
             }
         }
     }

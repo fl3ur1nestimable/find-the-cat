@@ -14,7 +14,7 @@
 void parcours(char* directorypath,struct_command* c/*,int count*/){
     struct dirent *dir;
     DIR *d;
-    //char* directory=malloc(strlen(directorypath)*sizeof(char));
+    //char* directory=malloc(strlen(directorypath)*sizeof(char)); 
     char directory[strlen(directorypath)];
     strcpy(directory,directorypath);
     if (directory[strlen(directorypath)-1]=='/')

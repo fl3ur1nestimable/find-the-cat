@@ -7,7 +7,7 @@
 int estuneoption(char *chaine){
     char* nomoption[] = {"-name", "-size", "-date", "-mime", "-ctc" ,"-dir", "-color", "-perm", "-link", "-threads", "-ou"};
     for (int i=0;i<11;i++){
-        if (strcmp(chaine,nomoption[i])==0){
+        if (strcmp(chaine,nomoption[i])==0){ 
             return 1;
         }
     }

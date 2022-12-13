@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <regex.h>
-#include "MegaMimes.h"
+//#include "MegaMimes.h"
 
 
 void parcours(char* directorypath,struct_command* c,int count){
@@ -31,7 +31,7 @@ void parcours(char* directorypath,struct_command* c,int count){
                 }
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                if ((compare_name(dir,retour, c)||compare_regex(dir,retour,c)) && compare_size(retour,c) && compare_date(retour,c) && compare_dir(dir, retour,c) && compare_mime(retour,c))
+                if ((compare_name(dir,retour, c)||compare_regex(dir,retour,c)) && compare_size(retour,c) && compare_date(retour,c) && compare_dir(dir, retour,c) /*&& compare_mime(retour,c)*/)
                 {
                     printf("%s\n",retour);
                 }  
@@ -272,7 +272,7 @@ int compare_date(char* chemin_fichier, struct_command* c){
     }
 }
 
-int compare_mime(char* chemin_fichier, struct_command* c){
+/*int compare_mime(char* chemin_fichier, struct_command* c){
     //compare le mime type du fichier avec le mime type demandé
 
     if (c->mime==NULL){
@@ -301,7 +301,7 @@ int compare_mime(char* chemin_fichier, struct_command* c){
         }
     return 0;
     }
-}
+}*/
 
 int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
     if (c->yesdir==NULL){

@@ -321,6 +321,7 @@ int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
         if(d!=NULL){   
             closedir(d);
             if (strcmp(dir->d_name,directory)==0){
+                printf("je passe la\n");
             return 1;
             }
             else {

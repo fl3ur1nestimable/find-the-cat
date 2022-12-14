@@ -26,7 +26,7 @@ void parcours(char* directorypath,struct_command* c,int count){
         while ((dir = readdir(d))!=NULL){ 
             if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
                 if (count==0){
-                    if (c->yesdir==1){
+                    if ((c->yesdir==1)&&(c->dir==NULL)){
                     printf("%s\n",directory);
                     count++;
                     }

@@ -306,41 +306,25 @@ int compare_date(char* chemin_fichier, struct_command* c){
 }*/
 
 int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
-    if (c->yesdir==NULL){
+    if (c->yesdir==0){
         return 1;
     }
     else if (c->yesdir==1 && c->dir!=NULL){
-        char directory[strlen(c->dir)];
-        strcpy(directory,c->dir);
+        char directory[strlen(c->dir)]; 
+        strcpy(directory,c->dir); 
         if (directory[strlen(directory)-1]=='/')
         {
             directory[strlen(directory)-1]='\0';
         }
-        DIR *d;
-        d = opendir(testfichier);
-        if(d!=NULL){   
-            closedir(d);
+        if (isdir(testfichier)==1){
             if (strcmp(dir->d_name,directory)==0){
-                printf("je passe la\n");
-            return 1;
+                return 1;
             }
-            else {
-                return 0;
-            }
-        }
-        else{
-            return 0;
-        }
+        } 
     }
     else if (c->yesdir==1){
-        DIR *d;
-        d = opendir(testfichier);
-        if(d!=NULL){   
-            closedir(d) ;
+        if(isdir(testfichier)==1){
             return 1;
-        }
-        else{
-            return 0;
         }
     }
     return 0;

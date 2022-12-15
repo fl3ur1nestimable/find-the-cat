@@ -29,7 +29,7 @@ void parcours(char* directorypath,struct_command* c,int count){
                     if ((c->yesdir==1)&&(c->dir==NULL)){
                     printf("%s\n",directory);
                     count++;
-                    }
+                    }   
                 }
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
@@ -306,25 +306,40 @@ int compare_date(char* chemin_fichier, struct_command* c){
 }*/
 
 int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
-    if (c->yesdir==0){
+    if (c->yesdir==NULL){
         return 1;
     }
     else if (c->yesdir==1 && c->dir!=NULL){
-        char directory[strlen(c->dir)]; 
-        strcpy(directory,c->dir); 
+        char directory[strlen(c->dir)];
+        strcpy(directory,c->dir);
         if (directory[strlen(directory)-1]=='/')
         {
             directory[strlen(directory)-1]='\0';
         }
-        if (isdir(testfichier)==1){
+        DIR *d;
+        d = opendir(testfichier);
+        if(d!=NULL){   
+            closedir(d);
             if (strcmp(dir->d_name,directory)==0){
-                return 1;
+            return 1;
             }
-        } 
+            else {
+                return 0;
+            }
+        }
+        else{
+            return 0;
+        }
     }
     else if (c->yesdir==1){
-        if(isdir(testfichier)==1){
+        DIR *d;
+        d = opendir(testfichier);
+        if(d!=NULL){   
+            closedir(d) ;
             return 1;
+        }
+        else{
+            return 0;
         }
     }
     return 0;

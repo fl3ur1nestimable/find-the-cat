@@ -18,8 +18,6 @@ int estuneoption(char *chaine){
 int main(int argc, char *argv[]){
 
     struct_command *c = create_command();
-    
-
 
     if (argc < 2){
         printf("Pas assez d'argument\n");

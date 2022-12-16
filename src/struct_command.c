@@ -51,4 +51,10 @@ void setPerm(struct struct_command* c, char* perm){
 
 void setOu(struct struct_command* c, int ou){
     c->ou=ou;
+    c->nb_of_flags++;
+}
+
+void setCtc(struct struct_command* c, char* ctc){
+    c->ctc=ctc;
+    c->nb_of_flags++;
 }

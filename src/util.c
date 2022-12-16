@@ -22,7 +22,7 @@ void parcours(char* directorypath,struct_command* c,int count){
         return;
     }
     while ((dp=readdir(dir))!=NULL)
-    {
+    { 
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
             if (count==0){
@@ -35,7 +35,7 @@ void parcours(char* directorypath,struct_command* c,int count){
             strcat(path, "/");
             strcat(path, dp->d_name);
             
-            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c)){
+            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) /*&& compareCtc(path,c)*/){
                 printf("%s\n",path);
             }
             parcours(path,c,count);
@@ -362,11 +362,11 @@ int isdir(char* chemin_fichier){
 int comparePerm(char* chemin_fichier, struct_command* c){
     struct stat fichier;
     stat(chemin_fichier, &fichier);
-    if (isdir(chemin_fichier)==1){
-        return 0;
-    }
     if (c->perm==NULL){
         return 1;
+    }
+    if (isdir(chemin_fichier)==1){
+        return 0;
     }
     else {
         int mode = fichier.st_mode;
@@ -380,6 +380,34 @@ int comparePerm(char* chemin_fichier, struct_command* c){
         int permasked=atoi(c->perm);
         if (octal==permasked){
             return 1;
+        }
+        else {
+            return 0;
+        }
+    } 
+    return 0;
+}
+
+int compareCtc(char* chemin_fichier, struct_command* c){
+    //read file and check if the content is in the file
+    if (c->ctc==NULL){
+        return 1;
+    }
+    if (isdir(chemin_fichier)==1){
+        return 0;
+    }
+    else {
+        FILE* fichier = fopen(chemin_fichier, "r");
+        if (fichier!=NULL){
+            char chaine[1000] = "";
+            while (fgets(chaine, 1000, fichier) != NULL){
+                if (strstr(chaine,c->ctc)!=NULL){
+                    fclose(fichier);
+                    return 1;
+                }
+            }
+            fclose(fichier);
+            return 0;
         }
         else {
             return 0;

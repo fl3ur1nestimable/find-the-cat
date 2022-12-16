@@ -28,6 +28,7 @@ void setDir(struct struct_command* c, char* dir);
 void setYesDir(struct struct_command* c);
 void setPerm(struct struct_command* c, char* perm);
 void setOu(struct struct_command* c, int ou);
+void setCtc(struct struct_command* c, char* ctc);
 
 
 #endif

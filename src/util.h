@@ -14,6 +14,7 @@ int compare_dir(struct dirent *dir, char* testfichier, struct_command* c);
 int isdir(char* chemin_fichier);
 int comparePerm(char* chemin_fichier, struct_command* c);
 int compareCtc(char* chemin_fichier, struct_command* c);
+int regex(const char* regex, const char* chaine);
 
 
 #endif

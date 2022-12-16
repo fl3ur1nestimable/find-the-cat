@@ -35,7 +35,7 @@ void parcours(char* directorypath,struct_command* c,int count){
             strcat(path, "/");
             strcat(path, dp->d_name);
             
-            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) /*&& compareCtc(path,c)*/){
+            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) && compareCtc(path,c)){
                 printf("%s\n",path);
             }
             parcours(path,c,count);
@@ -105,23 +105,29 @@ int compare_regex(struct dirent *dir, char* cheminfichier, struct_command* c){
             return 0;
         }
         else{
-        int err;
-        regex_t preg;
         const char *str_request = dir->d_name;
         const char *str_regex = c->name;    
-        err = regcomp(&preg,str_regex,0);
-        if (err == 0){
-            int match;
-            match = regexec(&preg, str_request,0,NULL,0);
-            regfree(&preg);
-            if (match==0)
-            {
-                return 1;   
-            }
+        if (regex(str_request,str_regex)==1){
+            return 1;
         }
-        
     }
     }   
+    return 0;
+}
+
+int regex(const char* str_request,const char* str_regex){
+    int err;
+    regex_t preg;
+    err = regcomp(&preg,str_regex,0);
+    if (err == 0){
+        int match;
+        match = regexec(&preg, str_request,0,NULL,0);
+        regfree(&preg);
+        if (match==0)
+        {
+            return 1;   
+        }
+    }
     return 0;
 }
 
@@ -400,7 +406,9 @@ int compareCtc(char* chemin_fichier, struct_command* c){
         if (fichier!=NULL){
             char chaine[1000] = "";
             while (fgets(chaine, 1000, fichier) != NULL){
-                if (strstr(chaine,c->ctc)!=NULL){
+                const char *str_request = chaine;
+                const char *str_search = c->ctc;
+                if (regex(str_request, str_search)){
                     fclose(fichier);
                     return 1;
                 }

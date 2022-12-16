@@ -11,7 +11,7 @@
 //#include "MegaMimes.h"
 
 
-void parcours(char* directorypath,struct_command* c,int count){
+/*void parcours(char* directorypath,struct_command* c,int count){
     struct dirent *dir;
     DIR *d;
     //char* directory=malloc(strlen(directorypath)*sizeof(char)); 
@@ -33,7 +33,7 @@ void parcours(char* directorypath,struct_command* c,int count){
                 }
                 char retour[10000] = "";
                 strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                if ((compare_name(dir,retour, c)||compare_regex(dir,retour,c)) && compare_size(retour,c) && compare_date(retour,c) && compare_dir(dir, retour,c) /*&& compare_mime(retour,c)*/)
+                if ((compare_name(dir,retour, c)||compare_regex(dir,retour,c)) && compare_size(retour,c) && compare_date(retour,c) && compare_dir(dir, retour,c) && compare_mime(retour,c))
                 {
                     printf("%s\n",retour);
                 }  
@@ -42,6 +42,42 @@ void parcours(char* directorypath,struct_command* c,int count){
         }
     }
     closedir(d);
+}*/
+
+void parcours(char* directorypath,struct_command* c,int count){
+    char path[1000];
+    struct dirent *dp;
+    if (directorypath[strlen(directorypath)-1]=='/')
+    {
+        directorypath[strlen(directorypath)-1]='\0';
+    }
+    DIR *dir = opendir(directorypath);
+    if(!dir){
+        return;
+    }
+    while ((dp=readdir(dir))!=NULL)
+    {
+        if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
+        {
+            if (count==0){
+                if ((c->yesdir==1)&&(c->dir==NULL)){
+                printf("%s\n",directorypath);
+                count++;
+                }   
+            }
+            strcpy(path, directorypath);
+            strcat(path, "/");
+            strcat(path, dp->d_name);
+            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c)){
+                printf("%s\n",path);
+            }
+            parcours(path,c,count);
+        }
+        
+    }
+    closedir(dir); 
+    
+
 }
 
 void parcoursSimple(char* directorypath, int count){
@@ -306,7 +342,7 @@ int compare_date(char* chemin_fichier, struct_command* c){
 }*/
 
 int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
-    if (c->yesdir==NULL){
+    if (c->yesdir==0){
         return 1;
     }
     else if (c->yesdir==1 && c->dir!=NULL){

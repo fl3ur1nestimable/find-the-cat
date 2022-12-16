@@ -40,3 +40,15 @@ void setDir(struct struct_command* c, char* dir){
 void setYesDir(struct struct_command* c){
     c->yesdir=1;
 }
+
+void setPerm(struct struct_command* c, char* perm){
+    char perm2[10];
+    strcpy(perm2,"100");
+    strcat(perm2,perm);
+    c->perm=perm2;
+    c->nb_of_flags++;
+}
+
+void setOu(struct struct_command* c, int ou){
+    c->ou=ou;
+}

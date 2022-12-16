@@ -34,7 +34,8 @@ void parcours(char* directorypath,struct_command* c,int count){
             strcpy(path, directorypath);
             strcat(path, "/");
             strcat(path, dp->d_name);
-            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c)){
+            
+            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c)){
                 printf("%s\n",path);
             }
             parcours(path,c,count);
@@ -356,4 +357,33 @@ int isdir(char* chemin_fichier){
     else {
         return 0;
     }
+}
+
+int comparePerm(char* chemin_fichier, struct_command* c){
+    struct stat fichier;
+    stat(chemin_fichier, &fichier);
+    if (isdir(chemin_fichier)==1){
+        return 0;
+    }
+    if (c->perm==NULL){
+        return 1;
+    }
+    else {
+        int mode = fichier.st_mode;
+        int octal = 0;
+        int i = 1;
+        while (mode != 0) {
+            octal += (mode % 8) * i;
+            mode /= 8;
+            i *= 10;
+        }
+        int permasked=atoi(c->perm);
+        if (octal==permasked){
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    return 0;
 }

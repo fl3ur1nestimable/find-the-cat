@@ -14,7 +14,7 @@ typedef struct struct_command
     char *perm;
     char *link;
     char *threads;
-    char *ou;
+    int ou;
     int nb_of_flags;
 } struct_command;
 
@@ -26,6 +26,8 @@ void setDate(struct struct_command* c, char* date);
 void setMime(struct struct_command* c, char* mime);
 void setDir(struct struct_command* c, char* dir);
 void setYesDir(struct struct_command* c);
+void setPerm(struct struct_command* c, char* perm);
+void setOu(struct struct_command* c, int ou);
 
 
 #endif

@@ -145,6 +145,19 @@ int main(int argc, char *argv[]){
                 exit(EXIT_FAILURE);
             }
         }
+
+        else if(strcmp(argv[i],"-perm")==0){
+            if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
+            {
+                setPerm(c,argv[i+1]);
+                i++;
+            }else
+            {
+                printf("-perm : no value\n");
+                free(c);
+                exit(EXIT_FAILURE);
+            }
+        }
     }
 
     parcours(argv[1],c,0);

@@ -389,7 +389,6 @@ int comparePerm(char* chemin_fichier, struct_command* c){
 }
 
 int compareCtc(char* chemin_fichier, struct_command* c){
-    //read file and check if the content is in the file
     if (c->ctc==NULL){
         return 1;
     }

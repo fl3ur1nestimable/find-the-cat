@@ -10,40 +10,6 @@
 #include <regex.h>
 //#include "MegaMimes.h"
 
-
-/*void parcours(char* directorypath,struct_command* c,int count){
-    struct dirent *dir;
-    DIR *d;
-    //char* directory=malloc(strlen(directorypath)*sizeof(char)); 
-    char directory[strlen(directorypath)];
-    strcpy(directory,directorypath);
-    if (directory[strlen(directorypath)-1]=='/')
-    {
-        directory[strlen(directory)-1]='\0';
-    }
-    d = opendir(directory);
-    if (d!=NULL){
-        while ((dir = readdir(d))!=NULL){ 
-            if (strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 && dir->d_name[0]!='.'){
-                if (count==0){
-                    if ((c->yesdir==1)&&(c->dir==NULL)){
-                    printf("%s\n",directory);
-                    count++;
-                    }   
-                }
-                char retour[10000] = "";
-                strcat(strcat(strcat(retour,directory),"/"),dir->d_name);
-                if ((compare_name(dir,retour, c)||compare_regex(dir,retour,c)) && compare_size(retour,c) && compare_date(retour,c) && compare_dir(dir, retour,c) && compare_mime(retour,c))
-                {
-                    printf("%s\n",retour);
-                }  
-                parcours(retour,c,count);
-            }
-        }
-    }
-    closedir(d);
-}*/
-
 void parcours(char* directorypath,struct_command* c,int count){
     char path[1000];
     struct dirent *dp;

@@ -234,7 +234,7 @@ int main(int argc, char *argv[]){
                 printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
                 exit(EXIT_FAILURE);
             }
-        }
+        } 
 
         else
         {

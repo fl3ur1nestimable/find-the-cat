@@ -173,9 +173,14 @@ int main(int argc, char *argv[]){
             }
         }
 
+        else if( strcmp(argv[i],"-color")==0){
+            setColor(c);
+            
+        }
+
         else
         {
-            printf("no valid flag\n");
+            printf("%s :not a valid flag\n",argv[i]);
             exit(EXIT_FAILURE);
         }
         

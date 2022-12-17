@@ -61,3 +61,8 @@ void setCtc(struct struct_command* c, char* ctc){
     c->ctc=ctc;
     c->nb_of_flags++;
 }
+
+void setColor(struct struct_command* c){
+    c->color="true";
+    c->nb_of_flags++;
+}

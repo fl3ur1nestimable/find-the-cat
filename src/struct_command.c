@@ -9,6 +9,7 @@ struct_command* create_command(){
 }
 
 void destroy_command(struct_command *c){
+    free(c->perm);
     free(c);
 }
 
@@ -42,11 +43,13 @@ void setYesDir(struct struct_command* c){
 }
 
 void setPerm(struct struct_command* c, char* perm){
-    char perm2[10];
+    char *perm2 = malloc(10*sizeof(char));
     strcpy(perm2,"100");
     strcat(perm2,perm);
-    c->perm=perm2;
+    c->perm=malloc(10*sizeof(char));
+    strcpy(c->perm,perm2);
     c->nb_of_flags++;
+    free(perm2);
 }
 
 void setOu(struct struct_command* c, int ou){

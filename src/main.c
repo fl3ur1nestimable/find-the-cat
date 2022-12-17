@@ -21,13 +21,13 @@ int main(int argc, char *argv[]){
 
     if (argc < 2){
         printf("Pas assez d'argument\n");
-        free(c);
+        destroy_command(c);;
         exit(EXIT_FAILURE);
     }
 
     if (argc < 3){
         parcoursSimple(argv[1],0);
-        free(c);
+        destroy_command(c);;
         return 0;
     }
 
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
             else if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
                 printf("Le flag %s n'est pas correct\n",argv[i+1]);
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }
 
@@ -70,12 +70,12 @@ int main(int argc, char *argv[]){
                         
             else {
                 printf("Pas assez d'arguments\n");
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }
 
             if (i+2>=argc){
-                free(c);
+                destroy_command(c);;
                 return 1;
             }
 
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
             }else
             {
                 printf("-name : no value\n");
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }
         }
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]){
             }
             else{
                 printf("-size : no value\n");
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }
         }
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]){
             }
             else{
                 printf("-date : no value\n");
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }   
         }  
@@ -141,7 +141,7 @@ int main(int argc, char *argv[]){
             }else
             {
                 printf("-mime : no value\n");
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }
         }
@@ -154,7 +154,7 @@ int main(int argc, char *argv[]){
             }else
             {
                 printf("-perm : no value\n");
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }
         }
@@ -168,17 +168,24 @@ int main(int argc, char *argv[]){
             }else
             {
                 printf("-ctc : no value\n");
-                free(c);
+                destroy_command(c);;
                 exit(EXIT_FAILURE);
             }
         }
+
+        else
+        {
+            printf("no valid flag\n");
+            exit(EXIT_FAILURE);
+        }
+        
 
         
         
     }
 
     parcours(argv[1],c,0);
-    free(c);
+    destroy_command(c);;
     return 0;
 }
 

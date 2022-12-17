@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <regex.h>
-//#include "MegaMimes.h"
+#include "MegaMimes.h"
 
 void parcours(char* directorypath,struct_command* c,int count){
     char path[1000];
@@ -35,7 +35,7 @@ void parcours(char* directorypath,struct_command* c,int count){
             strcat(path, "/");
             strcat(path, dp->d_name);
             
-            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) && compareCtc(path,c)){
+            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) && compareCtc(path,c)&& compare_mime(path,c)){
                 printf("%s\n",path);
             }
             parcours(path,c,count);
@@ -283,14 +283,14 @@ int compare_date(char* chemin_fichier, struct_command* c){
     }
 }
 
-/*int compare_mime(char* chemin_fichier, struct_command* c){
+int compare_mime(char* chemin_fichier, struct_command* c){
     //compare le mime type du fichier avec le mime type demandé
 
     if (c->mime==NULL){
         return 1;
     }
     else {    
-        char* mime = getMegaMimeType(chemin_fichier);
+        const char* mime = getMegaMimeType(chemin_fichier);
         if (mime!=NULL){  
             char mime2[strlen(mime)];
             strcpy(mime2,mime);
@@ -302,7 +302,7 @@ int compare_date(char* chemin_fichier, struct_command* c){
             }      
             if (strcmp(mime,c->mime)==0){
                 return 1;
-            }
+            } 
             else if (strcmp(mime2,c->mime)==0){
                 return 1;
             }
@@ -312,7 +312,7 @@ int compare_date(char* chemin_fichier, struct_command* c){
         }
     return 0;
     }
-}*/
+}
 
 int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
     if (c->yesdir==0){

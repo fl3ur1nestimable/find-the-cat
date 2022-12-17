@@ -10,6 +10,7 @@ struct_command* create_command(){
 
 void destroy_command(struct_command *c){
     free(c->perm);
+    free(c->date);
     free(c);
 }
 
@@ -24,7 +25,9 @@ void setSize(struct struct_command* c, char* size){
 }
 
 void setDate(struct struct_command* c, char* date){
-    c->date=date;
+    int n = (int)strlen(date);
+    c->date = malloc((n+1)*sizeof(char));
+    strcpy(c->date,date);
     c->nb_of_flags++;
 }
 

@@ -34,8 +34,14 @@ void parcours(char* directorypath,struct_command* c,int count){
             strcpy(path, directorypath);
             strcat(path, "/");
             strcat(path, dp->d_name);
+
+            if (c->ou==1){
+                if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) || compare_size(path,c) || compare_date(path,c) || compare_dir(dp, path,c) || comparePerm(path,c) || compareCtc(path,c) || compare_mime(path,c)){
+                    printf("%s\n",path);
+                }
+            }
             
-            if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) && compareCtc(path,c) && compare_mime(path,c)){
+            else if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) && compareCtc(path,c) && compare_mime(path,c)){
                 printf("\033[1;33m");
                 printf("%s\n",path);
             }
@@ -82,7 +88,12 @@ void parcoursSimple(char* directorypath, int count){
 
 int compare_name(struct dirent *dir,char* cheminfichier, struct_command* c){
     if (c->name==NULL){
-        return 1;
+        if (c->ou==0){
+        return 1;    
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
     else{
         if (isdir(cheminfichier)==1){
@@ -99,7 +110,12 @@ int compare_name(struct dirent *dir,char* cheminfichier, struct_command* c){
 
 int compare_regex(struct dirent *dir, char* cheminfichier, struct_command* c){
     if(c->name==NULL){
+        if (c->ou==0){
         return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
 
     else {
@@ -139,7 +155,12 @@ int compare_size(char* chemin_fichier, struct_command* c){
     int plusmoins=0;
     int unite=0;
     if (c->size ==NULL){
+        if (c->ou==0){
         return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
 
     if (isdir(chemin_fichier)==1){
@@ -219,7 +240,12 @@ int compare_date(char* chemin_fichier, struct_command* c){
     struct stat fichier;
     int plusmoins=0;
     if (c->date ==NULL){
+        if (c->ou==0){
         return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
     if (isdir(chemin_fichier)==1){
             return 0;
@@ -289,7 +315,12 @@ int compare_mime(char* chemin_fichier, struct_command* c){
     //compare le mime type du fichier avec le mime type demandé
 
     if (c->mime==NULL){
+        if (c->ou==0){
         return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
     else {    
         const char* mime = getMegaMimeType(chemin_fichier);
@@ -318,7 +349,12 @@ int compare_mime(char* chemin_fichier, struct_command* c){
 
 int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
     if (c->yesdir==0){
+        if (c->ou==0){
         return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
     else if (c->yesdir==1 && c->dir!=NULL){
         char directory[strlen(c->dir)];
@@ -371,7 +407,12 @@ int comparePerm(char* chemin_fichier, struct_command* c){
     struct stat fichier;
     stat(chemin_fichier, &fichier);
     if (c->perm==NULL){
+        if (c->ou==0){
         return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
     if (isdir(chemin_fichier)==1){
         return 0;
@@ -398,7 +439,12 @@ int comparePerm(char* chemin_fichier, struct_command* c){
 
 int compareCtc(char* chemin_fichier, struct_command* c){
     if (c->ctc==NULL){
+        if (c->ou==0){
         return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
     }
     if (isdir(chemin_fichier)==1){
         return 0;

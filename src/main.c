@@ -85,8 +85,14 @@ int main(int argc, char *argv[]){
         {
             if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
-                setName(c,argv[i+1]);
-                i++;
+                if (c->name==NULL){
+                    setName(c,argv[i+1]);
+                    i++;
+                }
+                else{
+                    printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                    exit(EXIT_FAILURE);
+                }
             }else
             {
                 printf("-name : no value\n");
@@ -97,8 +103,14 @@ int main(int argc, char *argv[]){
 
         else if (strcmp(argv[i],"-size")==0){
             if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0){
-                setSize(c,argv[i+1]);
-                i++;
+                if (c->size==NULL){
+                    setSize(c,argv[i+1]);
+                    i++;
+                }
+                else{
+                    printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                    exit(EXIT_FAILURE);
+                }
             }
             else{
                 printf("-size : no value\n");
@@ -109,8 +121,14 @@ int main(int argc, char *argv[]){
 
         else if (strcmp(argv[i],"-date")==0){
             if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0){
+                if(c->date==NULL){
                 setDate(c,argv[i+1]);
                 i++;
+                }
+                else {
+                    printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                    exit(EXIT_FAILURE);
+                }
             }
             else{
                 printf("-date : no value\n");
@@ -120,6 +138,7 @@ int main(int argc, char *argv[]){
         }  
 
         else if (strcmp(argv[i],"-dir")==0){
+            if (c->yesdir==0){
             if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0){
                 setDir(c,argv[i+1]);
                 setYesDir(c);
@@ -131,13 +150,24 @@ int main(int argc, char *argv[]){
             else if(argv[i+1]==NULL){
                 setYesDir(c);
             }
+            }
+            else {
+                    printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                    exit(EXIT_FAILURE);
+            }
         }
 
         else if (strcmp(argv[i],"-mime")==0){
             if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
+                if (c->mime==NULL){
                 setMime(c,argv[i+1]);
                 i++;
+                }
+                else{
+                    printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                    exit(EXIT_FAILURE);
+                }
             }else
             {
                 printf("-mime : no value\n");
@@ -149,8 +179,14 @@ int main(int argc, char *argv[]){
         else if(strcmp(argv[i],"-perm")==0){
             if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
+                if (c->perm==NULL){
                 setPerm(c,argv[i+1]);
                 i++;
+                }
+                else{
+                    printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                    exit(EXIT_FAILURE);
+                }
             }else
             {
                 printf("-perm : no value\n");
@@ -163,8 +199,14 @@ int main(int argc, char *argv[]){
         {
             if (argv[i+1]!=NULL && estuneoption(argv[i+1])==0)
             {
+                if (c->ctc==NULL){
                 setCtc(c,argv[i+1]);
                 i++;
+                }
+                else{
+                    printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                    exit(EXIT_FAILURE);
+                }
             }else
             {
                 printf("-ctc : no value\n");
@@ -174,8 +216,24 @@ int main(int argc, char *argv[]){
         }
 
         else if( strcmp(argv[i],"-color")==0){
-            setColor(c);
+            if (c->color==0){
+                setColor(c);
+            }
+            else{
+                printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                exit(EXIT_FAILURE);
+            }
             
+        }
+
+        else if (strcmp(argv[i],"-ou")==0){
+            if (c->ou==0){
+                setOu(c);
+            }
+            else {
+                printf("Vous ne pouvez pas utiliser 2 fois la même option\n");
+                exit(EXIT_FAILURE);
+            }
         }
 
         else

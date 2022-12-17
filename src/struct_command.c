@@ -52,8 +52,8 @@ void setPerm(struct struct_command* c, char* perm){
     free(perm2);
 }
 
-void setOu(struct struct_command* c, int ou){
-    c->ou=ou;
+void setOu(struct struct_command* c){
+    c->ou=1;
     c->nb_of_flags++;
 }
 

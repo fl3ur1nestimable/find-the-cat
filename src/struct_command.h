@@ -27,7 +27,7 @@ void setMime(struct struct_command* c, char* mime);
 void setDir(struct struct_command* c, char* dir);
 void setYesDir(struct struct_command* c);
 void setPerm(struct struct_command* c, char* perm);
-void setOu(struct struct_command* c, int ou);
+void setOu(struct struct_command* c);
 void setCtc(struct struct_command* c, char* ctc);
 void setColor(struct struct_command* c);
 

@@ -36,7 +36,7 @@ void parcours(char* directorypath,struct_command* c,int count){
             strcat(path, dp->d_name);
             
             if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) && compareCtc(path,c) && compare_mime(path,c)){
-                if(c->color!=NULL && strcmp(c->color,"true")==0) printf("\033[1;33m");
+                printf("\033[1;33m");
                 printf("%s\n",path);
             }
             parcours(path,c,count);
@@ -102,7 +102,7 @@ int compare_regex(struct dirent *dir, char* cheminfichier, struct_command* c){
         return 1;
     }
 
-    else{
+    else {
         if (isdir(cheminfichier)==1){
             return 0;
         }

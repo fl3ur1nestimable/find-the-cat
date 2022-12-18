@@ -27,6 +27,7 @@ void parcours(char* directorypath,struct_command* c,int count){
         {
             if (count==0){
                 if ((c->yesdir==1)&&(c->dir==NULL)){
+                if (c->color != NULL && strcmp(c->color,"true")==0) printf("\033[1;33m");
                 printf("%s\n",directorypath);
                 count++;
                 }   

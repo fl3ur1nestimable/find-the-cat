@@ -11,16 +11,25 @@ struct_command* create_command(){
 void destroy_command(struct_command *c){
     free(c->perm);
     free(c->date);
+    free(c->dir);
+    free(c->mime);
+    free(c->name);
+    free(c->size);
+    free(c->ctc);
     free(c);
 }
 
 void setName(struct_command* c, char* name){
-    c->name=name;
+    int n = (int)strlen(name);
+    c->name=malloc((n+1)*sizeof(char));
+    strcpy(c->name,name);
     c->nb_of_flags++;
 }
 
 void setSize(struct struct_command* c, char* size){
-    c->size=size;
+    int n = (int)strlen(size);
+    c->size=malloc((n+1)*sizeof(char));
+    strcpy(c->size,size);
     c->nb_of_flags++;
 }
 
@@ -32,12 +41,16 @@ void setDate(struct struct_command* c, char* date){
 }
 
 void setMime(struct struct_command* c, char* mime){
-    c->mime=mime;
+    int n = (int)strlen(mime);
+    c->mime=malloc((n+1)*sizeof(char));
+    strcpy(c->mime,mime);
     c->nb_of_flags++;
 }
 
 void setDir(struct struct_command* c, char* dir){
-    c->dir=dir;
+    int n = (int)strlen(dir);
+    c->dir=malloc((n+1)*sizeof(char));
+    strcpy(c->dir,dir);
     c->nb_of_flags++;
 }
 
@@ -61,7 +74,9 @@ void setOu(struct struct_command* c){
 }
 
 void setCtc(struct struct_command* c, char* ctc){
-    c->ctc=ctc;
+    int n = (int)strlen(ctc);
+    c->ctc=malloc((n+1)*sizeof(char));
+    strcpy(c->ctc,ctc);
     c->nb_of_flags++;
 }
 

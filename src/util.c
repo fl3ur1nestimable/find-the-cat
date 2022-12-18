@@ -37,13 +37,13 @@ void parcours(char* directorypath,struct_command* c,int count){
             strcat(path, dp->d_name);
 
             if (c->ou==1){
-                if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) || compare_size(path,c) || compare_date(path,c) || compare_dir(dp, path,c) || comparePerm(path,c) || compareCtc(path,c) || compare_mime(path,c)){
+                if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) || compare_size(path,c) || compare_date(path,c) || (compare_dir(dp, path,c)||compare_dir_regex(dp,path,c)) || comparePerm(path,c) || compareCtc(path,c) || compare_mime(path,c)){
                     if (c->color != NULL && strcmp(c->color,"true")==0) printf("\033[1;33m");
                     printf("%s\n",path);
                 }
             }
             
-            else if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && compare_dir(dp, path,c) && comparePerm(path,c) && compareCtc(path,c) && compare_mime(path,c)){
+            else if ((compare_name(dp,path, c)||compare_regex(dp,path,c)) && compare_size(path,c) && compare_date(path,c) && (compare_dir(dp, path,c)||compare_dir_regex(dp,path,c)) && comparePerm(path,c) && compareCtc(path,c) && compare_mime(path,c)){
                 if (c->color != NULL && strcmp(c->color,"true")==0) printf("\033[1;33m");
                 printf("%s\n",path);
             }
@@ -373,6 +373,54 @@ int compare_dir(struct dirent *dir, char* testfichier, struct_command* c){
             if (strcmp(dir->d_name,directory)==0){
             return 1;
             }
+            else {
+                return 0;
+            }
+        }
+        else{
+            return 0;
+        }
+    }
+    else if (c->yesdir==1){
+        DIR *d;
+        d = opendir(testfichier);
+        if(d!=NULL){   
+            closedir(d) ;
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    return 0;
+}
+
+int compare_dir_regex(struct dirent *dir, char* testfichier, struct_command* c){
+    if (c->yesdir==0){
+        if (c->ou==0){
+        return 1;
+        }
+        else if (c->ou==1){
+            return 0;
+        }
+    }
+    else if (c->yesdir==1 && c->dir!=NULL){
+        char directory[strlen(c->dir)];
+        strcpy(directory,c->dir);
+        if (directory[strlen(directory)-1]=='/')
+        {
+            directory[strlen(directory)-1]='\0';
+        }
+        DIR *d;
+        d = opendir(testfichier);
+        if(d!=NULL){   
+            closedir(d);
+
+        const char *str_request = dir->d_name;
+        const char *str_regex = directory;    
+        if (regex(str_request,str_regex)==1){
+            return 1;
+        }
             else {
                 return 0;
             }
